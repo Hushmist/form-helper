@@ -1,0 +1,18 @@
+{
+    "name": "hushmist/form-helper",
+    "description": "php helpers with bootstrap for creating forms",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Hushmist\\FormHelper\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.0"
+    }
+}
