@@ -35,6 +35,48 @@ if (!function_exists('formMap')) {
         return $res;
     }
 }
+
+
+if (!function_exists('formDropdownOptgroup')) {
+
+    function formDropdownOptgroup($options_name, $name = '', $options = [], $label = '', $selected_id = null, $has_null = false, $id = null, $is_disabled = false, $is_required = false, $is_multiple = false, $is_hidden = false, $select_extra_class = null, $on_change = null) {
+        $res = "<div class='form-group' ".($is_hidden ? ' hidden ' : '').">
+          <label>$label</label>
+          <select name='$name' class='form-control $select_extra_class' id='$id' style='width: 100%;' tabindex='-1' aria-hidden='true' ".($is_multiple ? ' multiple ' : '').($is_disabled ? ' disabled ' : '').($is_required ? ' required ' : '')." onChange='$on_change'>
+           ";
+        if($has_null) {
+            $res .= "
+                <option value>Не выбрано</option>
+            ";
+        }
+        foreach ($options ?? [] as $option_group) {
+            $res .= "<optgroup label='$option_group->title'>";
+            foreach ($option_group->$options_name ?? [] as $option) {
+                if(!isset($option['id'])) {
+                    $value = $option;
+                    $text = $option;
+                } else {
+                    $value = $option['id'];
+                    $text = $option['name'] ?? $option['title'] ?? $option['body'];
+                }
+                $is_selected = $is_multiple
+                    ? in_array($value, $selected_id ?? [])
+                    : ($selected_id == $value);
+
+                $res .= "
+                <option ".($is_selected ? 'selected="selected"' : '') . " value='$value'>".__($text)."</option>
+                ";
+            }
+            $res .= "</optgroup>";
+        }
+        $res .= "
+          </select>
+        </div>
+    ";
+        return $res;
+    }
+}
+
 if (!function_exists('formInput')) {
 
     function formInput($name = '', $placeholder = '', $value = '', $label = '', $is_hidden = false, $id = null, $is_disabled = false, $is_required = false, $type = '', $step = 'any', $is_readonly = false, $div_class = null, $input_class = null, $input_id = null)
