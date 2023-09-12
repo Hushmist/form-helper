@@ -50,7 +50,8 @@ if (!function_exists('formDropdownOptgroup')) {
             ";
         }
         foreach ($options ?? [] as $option_group) {
-            $res .= "<optgroup label='$option_group->title'>";
+            $option_group_title = $option_group->title ?? $option_group->name;
+            $res .= "<optgroup label='$option_group_title'>";
             foreach ($option_group->$options_name ?? [] as $option) {
                 if(!isset($option['id'])) {
                     $value = $option;
